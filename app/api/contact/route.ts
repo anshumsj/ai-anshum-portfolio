@@ -1,5 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+
 import nodemailer from "nodemailer";
+import { NextRequest, NextResponse } from "next/server";
+import { sendMail } from "@/lib/mailer";
 
 export async function POST(req: NextRequest) {
   const { name, email, message } = await req.json();
@@ -8,18 +10,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
   }
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_PASS,
-    },
-  });
-
-  await transporter.sendMail({
-    from: process.env.GMAIL_USER,
-    to: process.env.GMAIL_USER,
-    replyTo: email,
+  await sendMail({
     subject: `Portfolio contact from ${name}`,
     text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
   });
