@@ -46,7 +46,7 @@ await sendMail({
 
   try {
     const result = await geminiModel.generateContent(prompt);
-    const answer = result.response.text();
+    const answer = result.response.text() ?? "I couldn't generate a response. Please try again.";
     return NextResponse.json({ answer });
   } catch (err: unknown) {
     const error = err as { status?: number; message?: string };
