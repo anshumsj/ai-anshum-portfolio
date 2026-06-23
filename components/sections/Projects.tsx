@@ -1,38 +1,11 @@
 "use client";
 
-// ── Add your real projects here ──────────────────────────────
-const projects = [
-  {
-    title: "Multi-Tenant Workspace Management System",
-    description:
-      "A backend system supporting multiple isolated workspaces, each with projects, tasks, and role-based access. Built with a focus on clean architecture and consistent API design.",
-    tags: ["Node.js", "Express", "MongoDB", "JWT", "Docker"],
-    github: "https://github.com/yourusername/workspace-management", // ← update
-    live: null,
-    highlight: true,
-  },
-  {
-    title: "AI Portfolio — this site",
-    description:
-      "A Next.js portfolio with a self-evolving AI chatbot. Unanswered questions are saved to a knowledge base and answered through an admin dashboard — making the AI smarter over time.",
-    tags: ["Next.js", "MongoDB", "Groq AI", "Tailwind"],
-    github: "https://github.com/yourusername/ai-portfolio", // ← update
-    live: "https://yourdomain.vercel.app", // ← update
-    highlight: false,
-  },
-  {
-    title: "Blog Backend API",
-    description:
-      "RESTful API for a blogging platform with auth, post management, and comment threading. First production-style backend project.",
-    tags: ["Node.js", "Express", "MongoDB", "JWT"],
-    github: "https://github.com/yourusername/blog-backend", // ← update
-    live: null,
-    highlight: false,
-  },
-  // ← Add more projects here
-];
+import { useState } from "react";
 
-export default function Projects() {
+export default function Projects({ initialProjects = [] }: { initialProjects?: any[] }) {
+  const featuredProjects = initialProjects.filter((p) => p.highlight).slice(0, 3);
+  const otherProjects = initialProjects.filter((p) => !p.highlight);
+
   return (
     <section
       id="projects"
@@ -66,7 +39,7 @@ export default function Projects() {
             Things I&apos;ve built
           </h2>
           <a
-            href="https://github.com/yourusername" // ← update
+            href="https://github.com/anshumsj"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-secondary"
@@ -76,17 +49,19 @@ export default function Projects() {
           </a>
         </div>
 
+        {/* Featured Projects Grid */}
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
             gap: 18,
+            marginBottom: 64,
           }}
           className="projects-grid"
         >
-          {projects.map((project) => (
+          {featuredProjects.map((project) => (
             <div
-              key={project.title}
+              key={project._id || project.title}
               className="glass"
               style={{
                 padding: 24,
@@ -94,44 +69,35 @@ export default function Projects() {
                 flexDirection: "column",
                 justifyContent: "space-between",
                 gap: 20,
-                borderColor: project.highlight
-                  ? "rgba(6,182,212,0.3)"
-                  : "var(--border)",
-                boxShadow: project.highlight
-                  ? "0 0 32px rgba(6,182,212,0.08)"
-                  : "none",
+                borderColor: "rgba(6,182,212,0.3)",
+                boxShadow: "0 0 32px rgba(6,182,212,0.08)",
                 transition: "border-color 0.2s, transform 0.2s",
                 position: "relative",
                 overflow: "hidden",
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLDivElement).style.transform = "translateY(-3px)";
-                (e.currentTarget as HTMLDivElement).style.borderColor =
-                  project.highlight ? "rgba(6,182,212,0.55)" : "rgba(255,255,255,0.12)";
+                (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(6,182,212,0.55)";
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-                (e.currentTarget as HTMLDivElement).style.borderColor = project.highlight
-                  ? "rgba(6,182,212,0.3)"
-                  : "var(--border)";
+                (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(6,182,212,0.3)";
               }}
             >
               {/* Featured glow blob */}
-              {project.highlight && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: -40,
-                    right: -40,
-                    width: 160,
-                    height: 160,
-                    borderRadius: "50%",
-                    background:
-                      "radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%)",
-                    pointerEvents: "none",
-                  }}
-                />
-              )}
+              <div
+                style={{
+                  position: "absolute",
+                  top: -40,
+                  right: -40,
+                  width: 160,
+                  height: 160,
+                  borderRadius: "50%",
+                  background:
+                    "radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%)",
+                  pointerEvents: "none",
+                }}
+              />
 
               {/* Top section */}
               <div>
@@ -143,23 +109,21 @@ export default function Projects() {
                     marginBottom: 12,
                   }}
                 >
-                  {project.highlight && (
-                    <span
-                      style={{
-                        fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: 10,
-                        color: "var(--cyan)",
-                        border: "1px solid rgba(6,182,212,0.35)",
-                        background: "var(--cyan-dim)",
-                        padding: "2px 9px",
-                        borderRadius: 100,
-                        letterSpacing: "0.06em",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      featured
-                    </span>
-                  )}
+                  <span
+                    style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: 10,
+                      color: "var(--cyan)",
+                      border: "1px solid rgba(6,182,212,0.35)",
+                      background: "var(--cyan-dim)",
+                      padding: "2px 9px",
+                      borderRadius: 100,
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    featured
+                  </span>
                 </div>
 
                 <h3
@@ -195,7 +159,7 @@ export default function Projects() {
                     marginBottom: 16,
                   }}
                 >
-                  {project.tags.map((tag) => (
+                  {project.tags.map((tag: string) => (
                     <span key={tag} className="tag">
                       {tag}
                     </span>
@@ -259,6 +223,76 @@ export default function Projects() {
             </div>
           ))}
         </div>
+
+        {/* Other Projects List */}
+        {otherProjects.length > 0 && (
+          <div>
+            <h3
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 12,
+                color: "var(--text-dim)",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                marginBottom: 24,
+              }}
+            >
+              Other Projects to look for
+            </h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {otherProjects.map((project) => (
+                <div
+                  key={project._id || project.title}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "16px 24px",
+                    background: "var(--bg-card)",
+                    border: "1px solid var(--border)",
+                    borderRadius: 12,
+                  }}
+                >
+                  <h4 style={{ fontSize: 14, fontWeight: 500, color: "var(--text)" }}>
+                    {project.title}
+                  </h4>
+                  <div style={{ display: "flex", gap: 16 }}>
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          fontFamily: "'JetBrains Mono', monospace",
+                          fontSize: 12,
+                          color: "var(--text-dim)",
+                          textDecoration: "none",
+                        }}
+                      >
+                        GitHub ↗
+                      </a>
+                    )}
+                    {project.live && (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          fontFamily: "'JetBrains Mono', monospace",
+                          fontSize: 12,
+                          color: "var(--cyan)",
+                          textDecoration: "none",
+                        }}
+                      >
+                        Live ↗
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <style>{`

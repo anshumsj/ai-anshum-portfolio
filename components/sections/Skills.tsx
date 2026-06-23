@@ -1,45 +1,6 @@
 "use client";
 
-const skills = [
-  {
-    category: "Backend",
-    icon: "⚙️",
-    accent: "var(--cyan)",
-    items: ["Node.js", "Express", "REST APIs", "JWT Auth", "Mongoose"],
-  },
-  {
-    category: "Database",
-    icon: "🗄️",
-    accent: "var(--violet)",
-    items: ["MongoDB", "Redis", "MongoDB Atlas", "Indexing"],
-  },
-  {
-    category: "DevOps",
-    icon: "🐳",
-    accent: "var(--cyan)",
-    items: ["Docker", "Docker Compose", "Railway", "Render", "Vercel"],
-  },
-  {
-    category: "Frontend",
-    icon: "🎨",
-    accent: "var(--violet)",
-    items: ["React", "Next.js", "Tailwind CSS"],
-  },
-  {
-    category: "Languages",
-    icon: "💻",
-    accent: "var(--cyan)",
-    items: ["JavaScript", "TypeScript", "Python", "C++"],
-  },
-  {
-    category: "Tools",
-    icon: "🛠",
-    accent: "var(--violet)",
-    items: ["Git", "GitHub", "Postman", "VS Code"],
-  },
-];
-
-export default function Skills() {
+export default function Skills({ initialSkills = [] }: { initialSkills?: any[] }) {
   return (
     <section
       id="skills"
@@ -72,7 +33,7 @@ export default function Skills() {
           }}
           className="skills-grid"
         >
-          {skills.map((group) => (
+          {initialSkills.map((group) => (
             <div
               key={group.category}
               className="glass"
@@ -118,7 +79,7 @@ export default function Skills() {
 
               {/* Tags */}
               <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
-                {group.items.map((skill) => (
+                {group.items.map((skill: string) => (
                   <span key={skill} className="tag">
                     {skill}
                   </span>
