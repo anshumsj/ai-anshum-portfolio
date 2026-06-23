@@ -158,9 +158,9 @@ export default function Hero() {
             }}
           >
             {[
-              { label: "GitHub", href: "https://github.com/yourusername" },
-              { label: "LinkedIn", href: "https://linkedin.com/in/yourusername" },
-              { label: "LeetCode", href: "https://leetcode.com/yourusername" },
+              { label: "GitHub", href: "https://github.com/anshumsj" },
+              { label: "LinkedIn", href: "https://www.linkedin.com/in/anshum-awasthi-366754201/" },
+              { label: "LeetCode", href: "https://leetcode.com/u/anshum12/" },
             ].map((s) => (
               <a
                 key={s.label}

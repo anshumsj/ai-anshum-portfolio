@@ -69,10 +69,11 @@ export default function Contact() {
 
           {/* Links */}
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            {[
-              { label: "Email", value: "your@email.com", href: "mailto:your@email.com" }, // ← update
-              { label: "GitHub", value: "github.com/yourusername", href: "https://github.com/yourusername" }, // ← update
-              { label: "LinkedIn", value: "linkedin.com/in/yourusername", href: "https://linkedin.com/in/yourusername" }, // ← update
+          {[
+              { label: "Email",    value: "anshumawasthiloveindia@gmail.com", href: "mailto:anshumawasthiloveindia@gmail.com" },
+              { label: "GitHub",   value: "github.com/anshumsj",              href: "https://github.com/anshumsj" },
+              { label: "LinkedIn", value: "linkedin.com/in/anshum-awasthi",   href: "https://www.linkedin.com/in/anshum-awasthi-366754201/" },
+              { label: "LeetCode", value: "leetcode.com/anshum12",            href: "https://leetcode.com/u/anshum12/" },
             ].map((link) => (
               <a
                 key={link.label}
@@ -303,6 +304,33 @@ export default function Contact() {
         >
           <span style={{ color: "var(--cyan)" }}>{">"}</span> anshum.dev
         </p>
+        <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
+          {[
+            { label: "GitHub",   href: "https://github.com/anshumsj" },
+            { label: "LinkedIn", href: "https://www.linkedin.com/in/anshum-awasthi-366754201/" },
+            { label: "LeetCode", href: "https://leetcode.com/u/anshum12/" },
+            { label: "Email",    href: "mailto:anshumawasthiloveindia@gmail.com" },
+            { label: "Admin",    href: "/admin" },
+          ].map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              target={s.href.startsWith("mailto") ? undefined : "_blank"}
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 11,
+                color: "var(--text-dim)",
+                textDecoration: "none",
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--cyan)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-dim)")}
+            >
+              {s.label} ↗
+            </a>
+          ))}
+        </div>
         <p style={{ fontSize: 12, color: "var(--text-dim)" }}>
           Built with Next.js · MongoDB · Groq AI
         </p>
