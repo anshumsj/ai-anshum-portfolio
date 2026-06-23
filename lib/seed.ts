@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 import { connectDB } from "./mongodb";
 import Question from "./models/Question";
+import Project from "./models/Project";
+import SkillGroup from "./models/Skill";
 
-const seedData = [
+const seedQuestions = [
   {
     question: "Tell me about yourself",
     answer:
@@ -47,17 +49,90 @@ const seedData = [
   },
 ];
 
+const seedProjects = [
+  {
+    title: "Multi-Tenant Workspace Management System",
+    description:
+      "A backend system supporting multiple isolated workspaces, each with projects, tasks, and role-based access. Built with a focus on clean architecture and consistent API design.",
+    tags: ["Node.js", "Express", "MongoDB", "JWT", "Docker"],
+    github: "https://github.com/anshumsj/workspace-management", // Using Anshum's username
+    live: null,
+    highlight: true,
+  },
+  {
+    title: "AI Portfolio — this site",
+    description:
+      "A Next.js portfolio with a self-evolving AI chatbot. Unanswered questions are saved to a knowledge base and answered through an admin dashboard — making the AI smarter over time.",
+    tags: ["Next.js", "MongoDB", "Groq AI", "Tailwind"],
+    github: "https://github.com/anshumsj/ai-portfolio",
+    live: null,
+    highlight: true, // We make top 3 highlighted
+  },
+  {
+    title: "Blog Backend API",
+    description:
+      "RESTful API for a blogging platform with auth, post management, and comment threading. First production-style backend project.",
+    tags: ["Node.js", "Express", "MongoDB", "JWT"],
+    github: "https://github.com/anshumsj/blog-backend",
+    live: null,
+    highlight: true,
+  },
+];
+
+const seedSkills = [
+  {
+    category: "Backend",
+    icon: "⚙️",
+    accent: "var(--cyan)",
+    items: ["Node.js", "Express", "REST APIs", "JWT Auth", "Mongoose"],
+  },
+  {
+    category: "Database",
+    icon: "🗄️",
+    accent: "var(--violet)",
+    items: ["MongoDB", "Redis", "MongoDB Atlas", "Indexing"],
+  },
+  {
+    category: "DevOps",
+    icon: "🐳",
+    accent: "var(--cyan)",
+    items: ["Docker", "Docker Compose", "Railway", "Render", "Vercel"],
+  },
+  {
+    category: "Frontend",
+    icon: "🎨",
+    accent: "var(--violet)",
+    items: ["React", "Next.js", "Tailwind CSS"],
+  },
+  {
+    category: "Languages",
+    icon: "💻",
+    accent: "var(--cyan)",
+    items: ["JavaScript", "TypeScript", "Python", "C++"],
+  },
+  {
+    category: "Tools",
+    icon: "🛠",
+    accent: "var(--violet)",
+    items: ["Git", "GitHub", "Postman", "VS Code"],
+  },
+];
+
 async function seed() {
   console.log("🌱 Connecting to MongoDB...");
   await connectDB();
 
-  console.log("🗑️  Clearing existing questions...");
+  console.log("🗑️  Clearing existing data...");
   await Question.deleteMany({});
+  await Project.deleteMany({});
+  await SkillGroup.deleteMany({});
 
   console.log("📥 Inserting seed data...");
-  const inserted = await Question.insertMany(seedData);
+  const insertedQs = await Question.insertMany(seedQuestions);
+  const insertedPs = await Project.insertMany(seedProjects);
+  const insertedSs = await SkillGroup.insertMany(seedSkills);
 
-  console.log(`✅ Successfully seeded ${inserted.length} questions!`);
+  console.log(`✅ Successfully seeded ${insertedQs.length} questions, ${insertedPs.length} projects, and ${insertedSs.length} skill groups!`);
   await mongoose.disconnect();
   console.log("🔌 Disconnected from MongoDB.");
 }
