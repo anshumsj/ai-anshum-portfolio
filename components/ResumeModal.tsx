@@ -54,89 +54,39 @@ export default function ResumeModal({
 
   return (
     <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.6)",
-        backdropFilter: "blur(4px)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 100,
-        padding: 20,
-      }}
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-5"
       onClick={onClose}
     >
       <div
-        className="glass"
-        style={{
-          width: "100%",
-          maxWidth: 400,
-          padding: 32,
-          position: "relative",
-          animation: "fade-up 0.3s ease-out forwards",
-        }}
+        className="glass w-full max-w-[400px] p-8 relative animate-fade-up"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          style={{
-            position: "absolute",
-            top: 16,
-            right: 16,
-            background: "none",
-            border: "none",
-            color: "var(--text-muted)",
-            cursor: "pointer",
-            fontSize: 18,
-          }}
+          className="absolute top-4 right-4 bg-transparent border-none text-[var(--text-muted)] cursor-pointer text-lg"
         >
           ✕
         </button>
 
-        <h3
-          style={{
-            fontSize: 20,
-            fontWeight: 600,
-            marginBottom: 8,
-            color: "var(--text)",
-          }}
-        >
+        <h3 className="text-xl font-semibold mb-2 text-[var(--text)]">
           Download Resume
         </h3>
         
         {status === "success" ? (
-          <div style={{ textAlign: "center", padding: "20px 0" }}>
-            <div
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: "50%",
-                background: "rgba(34,197,94,0.12)",
-                border: "1px solid rgba(34,197,94,0.3)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 18,
-                margin: "0 auto 12px",
-                color: "var(--green)"
-              }}
-            >
+          <div className="text-center py-5">
+            <div className="w-10 h-10 rounded-full bg-[rgba(34,197,94,0.12)] border border-[rgba(34,197,94,0.3)] flex items-center justify-center text-lg mx-auto mb-3 text-[var(--green)]">
               ✓
             </div>
-            <p style={{ color: "var(--text-muted)", fontSize: 14 }}>
+            <p className="text-[var(--text-muted)] text-sm">
               Downloading starting...
             </p>
           </div>
         ) : (
           <>
-            <p style={{ fontSize: 14, color: "var(--text-muted)", marginBottom: 24 }}>
+            <p className="text-sm text-[var(--text-muted)] mb-6">
               Please enter your email to download the resume. I'll get a quick notification!
             </p>
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div>
                 <input
                   type="email"
@@ -144,13 +94,12 @@ export default function ResumeModal({
                   placeholder="your@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="input"
-                  style={{ width: "100%" }}
+                  className="input w-full"
                 />
               </div>
 
               {status === "error" && (
-                <p style={{ fontSize: 12, color: "#f87171" }}>
+                <p className="text-xs text-red-400">
                   Something went wrong. Please try again.
                 </p>
               )}
@@ -158,14 +107,7 @@ export default function ResumeModal({
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="btn-primary"
-                style={{
-                  width: "100%",
-                  justifyContent: "center",
-                  padding: "10px 20px",
-                  opacity: status === "loading" ? 0.7 : 1,
-                  cursor: status === "loading" ? "not-allowed" : "pointer",
-                }}
+                className={`btn-primary w-full justify-center py-2.5 ${status === "loading" ? "opacity-70 cursor-not-allowed" : "cursor-pointer"}`}
               >
                 {status === "loading" ? "Processing..." : "Download PDF"}
               </button>

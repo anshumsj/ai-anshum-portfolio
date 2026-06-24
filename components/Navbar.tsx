@@ -26,63 +26,24 @@ export default function Navbar() {
   return (
     <>
       <nav
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 50,
-          transition: "background 0.3s, border-color 0.3s",
-          background: scrolled
-            ? "rgba(9,9,15,0.85)"
-            : "rgba(9,9,15,0.4)",
-          backdropFilter: "blur(16px)",
-          borderBottom: scrolled
-            ? "1px solid rgba(255,255,255,0.08)"
-            : "1px solid transparent",
-        }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md ${scrolled ? 'bg-[rgba(9,9,15,0.85)] border-b border-[rgba(255,255,255,0.08)]' : 'bg-[rgba(9,9,15,0.4)] border-b border-transparent'}`}
       >
-        <div
-          style={{
-            maxWidth: 1100,
-            margin: "0 auto",
-            padding: "0 32px",
-            height: 56,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+        <div className="content-wrap-padded h-14 flex items-center justify-between">
           {/* Logo */}
           <Link
             href="/"
-            style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 14,
-              fontWeight: 500,
-              color: "var(--text)",
-              textDecoration: "none",
-              letterSpacing: "-0.01em",
-            }}
+            className="font-mono text-sm font-medium text-[var(--text)] no-underline tracking-tight"
           >
-            <span style={{ color: "var(--cyan)" }}>{">"}</span> anshum.dev
+            <span className="text-[var(--cyan)]">{">"}</span> anshum.dev
           </Link>
 
           {/* Desktop links */}
-          <div style={{ display: "flex", alignItems: "center", gap: 28 }}
-               className="hidden-mobile">
+          <div className="hidden md:flex items-center gap-7">
             {links.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
-                style={{
-                  fontSize: 13,
-                  color: "var(--text-muted)",
-                  textDecoration: "none",
-                  transition: "color 0.2s",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
+                className="text-[13px] text-[var(--text-muted)] no-underline transition-colors hover:text-[var(--text)]"
               >
                 {l.label}
               </a>
@@ -90,8 +51,7 @@ export default function Navbar() {
 
             <button
               onClick={() => setIsResumeModalOpen(true)}
-              className="btn-primary"
-              style={{ padding: "7px 16px", fontSize: 12 }}
+              className="btn-primary text-xs px-4 py-1.5"
             >
               Resume ↗
             </button>
@@ -101,33 +61,16 @@ export default function Navbar() {
           <button
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
-            className="show-mobile"
-            style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              display: "flex",
-              flexDirection: "column",
-              gap: 5,
-              padding: 4,
-            }}
+            className="flex md:hidden flex-col gap-1.5 p-1 bg-transparent border-none cursor-pointer"
           >
             {[0, 1, 2].map((i) => (
               <span
                 key={i}
-                style={{
-                  display: "block",
-                  width: 22,
-                  height: 1.5,
-                  background: "var(--text-muted)",
-                  borderRadius: 2,
-                  transition: "transform 0.2s, opacity 0.2s",
-                  transform:
-                    open && i === 0 ? "translateY(6.5px) rotate(45deg)"
-                    : open && i === 2 ? "translateY(-6.5px) rotate(-45deg)"
-                    : "none",
-                  opacity: open && i === 1 ? 0 : 1,
-                }}
+                className={`block w-[22px] h-[1.5px] bg-[var(--text-muted)] rounded-sm transition-all duration-200 ${
+                  open && i === 0 ? "translate-y-[6.5px] rotate-45"
+                  : open && i === 2 ? "-translate-y-[6.5px] -rotate-45"
+                  : ""
+                } ${open && i === 1 ? "opacity-0" : "opacity-100"}`}
               />
             ))}
           </button>
@@ -135,26 +78,13 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {open && (
-          <div
-            style={{
-              background: "var(--bg-card)",
-              borderTop: "1px solid var(--border)",
-              padding: "16px 32px 20px",
-              display: "flex",
-              flexDirection: "column",
-              gap: 16,
-            }}
-          >
+          <div className="md:hidden bg-[var(--bg-card)] border-t border-[var(--border)] pt-4 px-8 pb-5 flex flex-col gap-4">
             {links.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                style={{
-                  fontSize: 14,
-                  color: "var(--text-muted)",
-                  textDecoration: "none",
-                }}
+                className="text-sm text-[var(--text-muted)] no-underline"
               >
                 {l.label}
               </a>
@@ -164,33 +94,12 @@ export default function Navbar() {
                 setOpen(false);
                 setIsResumeModalOpen(true);
               }}
-              style={{
-                fontSize: 13,
-                color: "var(--cyan)",
-                fontFamily: "'JetBrains Mono', monospace",
-                textDecoration: "none",
-                background: "none",
-                border: "none",
-                padding: 0,
-                textAlign: "left",
-                cursor: "pointer",
-              }}
+              className="text-[13px] text-[var(--cyan)] font-mono text-left bg-transparent border-none p-0 cursor-pointer"
             >
               Resume ↗
             </button>
           </div>
         )}
-
-        <style>{`
-          @media (min-width: 768px) {
-            .hidden-mobile { display: flex !important; }
-            .show-mobile   { display: none !important; }
-          }
-          @media (max-width: 767px) {
-            .hidden-mobile { display: none !important; }
-            .show-mobile   { display: flex !important; }
-          }
-        `}</style>
       </nav>
 
       <ResumeModal 

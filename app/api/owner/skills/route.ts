@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import SkillGroup from "@/lib/models/Skill";
-
+import { isAuthed } from "@/lib/auth";
 export async function GET() {
   try {
     await connectDB();
@@ -15,8 +15,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
-    const adminPassword = req.headers.get("x-admin-password");
-    if (adminPassword !== process.env.ADMIN_PASSWORD) {
+    if (!(await isAuthed())) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

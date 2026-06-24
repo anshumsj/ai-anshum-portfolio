@@ -1,4 +1,6 @@
 "use client";
+// Force HMR 
+
 
 import { useEffect, useState } from "react";
 
@@ -34,111 +36,42 @@ export default function Hero() {
   }, [displayed, deleting, roleIndex]);
 
   return (
-    <section
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        padding: "80px 32px",
-        maxWidth: 1100,
-        margin: "0 auto",
-      }}
-    >
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 64,
-          alignItems: "center",
-          width: "100%",
-        }}
-        className="hero-grid"
-      >
+    <section className="min-h-screen flex items-center py-20 px-8">
+      <div className="content-wrap grid grid-cols-1 md:grid-cols-2 gap-16 items-center w-full">
         {/* ── Left ─────────────────────────────── */}
         <div className="animate-fade-up">
           {/* Status badge */}
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              border: "1px solid rgba(34,197,94,0.25)",
-              background: "rgba(34,197,94,0.06)",
-              borderRadius: 100,
-              padding: "5px 14px",
-              marginBottom: 28,
-            }}
-          >
-            <span
-              className="pulse-dot"
-              style={{
-                width: 7,
-                height: 7,
-                borderRadius: "50%",
-                background: "var(--green)",
-                display: "block",
-              }}
-            />
-            <span
-              style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: 11,
-                color: "var(--green)",
-                letterSpacing: "0.06em",
-              }}
-            >
+          <div className="inline-flex items-center gap-2 border border-[rgba(34,197,94,0.25)] bg-[rgba(34,197,94,0.06)] rounded-full px-3.5 py-1.5 mb-7">
+            <span className="pulse-dot block w-[7px] h-[7px] rounded-full bg-[var(--green)]" />
+            <span className="font-mono text-[11px] text-[var(--green)] tracking-[0.06em]">
               open to opportunities
             </span>
           </div>
 
           {/* Heading */}
-          <h1
-            style={{
-              fontSize: "clamp(40px, 6vw, 68px)",
-              fontWeight: 700,
-              lineHeight: 1.05,
-              letterSpacing: "-0.03em",
-              marginBottom: 16,
-            }}
-          >
+          <h1 className="text-[clamp(40px,6vw,68px)] font-bold leading-[1.05] tracking-tight mb-4">
             Anshum
             <br />
             <span className="gradient-text">Awasthi</span>
           </h1>
 
           {/* Typewriter */}
-          <div
-            style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 15,
-              color: "var(--cyan)",
-              marginBottom: 20,
-              minHeight: 24,
-            }}
-          >
+          <div className="font-mono text-[15px] text-[var(--cyan)] mb-5 min-h-[24px]">
             {displayed}
-            <span className="cursor-blink" style={{ marginLeft: 1, color: "var(--cyan)" }}>|</span>
+            <span className="cursor-blink ml-px text-[var(--cyan)]">|</span>
           </div>
 
           {/* Description */}
-          <p
-            style={{
-              fontSize: 16,
-              color: "var(--text-muted)",
-              lineHeight: 1.7,
-              maxWidth: 420,
-              marginBottom: 36,
-            }}
-          >
+          <p className="text-base text-[var(--text-muted)] leading-[1.7] max-w-[420px] mb-9">
             Building backend systems that scale — and an AI that answers for me
             when I&apos;m not around.{" "}
-            <span style={{ color: "var(--text-dim)", fontFamily: "monospace", fontSize: 13 }}>
+            <span className="text-[var(--text-dim)] font-mono text-[13px]">
               B.Tech CSE · IIIT Bhagalpur
             </span>
           </p>
 
           {/* CTAs */}
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <div className="flex gap-3 flex-wrap">
             <a href="#projects" className="btn-primary">
               View Projects
             </a>
@@ -148,15 +81,7 @@ export default function Hero() {
           </div>
 
           {/* Socials row */}
-          <div
-            style={{
-              display: "flex",
-              gap: 20,
-              marginTop: 40,
-              paddingTop: 28,
-              borderTop: "1px solid var(--border)",
-            }}
-          >
+          <div className="flex gap-5 mt-10 pt-7 border-t border-[var(--border)]">
             {[
               { label: "GitHub", href: "https://github.com/anshumsj" },
               { label: "LinkedIn", href: "https://www.linkedin.com/in/anshum-awasthi-366754201/" },
@@ -167,15 +92,7 @@ export default function Hero() {
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: 12,
-                  color: "var(--text-dim)",
-                  textDecoration: "none",
-                  transition: "color 0.2s",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--cyan)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-dim)")}
+                className="font-mono text-[12px] text-[var(--text-dim)] no-underline transition-colors duration-200 hover:text-[var(--cyan)]"
               >
                 {s.label} ↗
               </a>
@@ -184,218 +101,72 @@ export default function Hero() {
         </div>
 
         {/* ── Right — Chat preview card ─────────── */}
-        <div
-          className="glass glow-cyan animate-fade-up animate-delay-2"
-          style={{ padding: 24, position: "relative", overflow: "hidden" }}
-        >
+        <div className="glass glow-cyan animate-fade-up animate-delay-2 p-6 relative overflow-hidden">
           {/* Decorative glow blob */}
           <div
-            style={{
-              position: "absolute",
-              top: -60,
-              right: -60,
-              width: 200,
-              height: 200,
-              borderRadius: "50%",
-              background: "radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)",
-              pointerEvents: "none",
-            }}
+            className="absolute -top-[60px] -right-[60px] w-[200px] h-[200px] rounded-full pointer-events-none"
+            style={{ background: "radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)" }}
           />
 
           {/* Card header */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              paddingBottom: 16,
-              marginBottom: 16,
-              borderBottom: "1px solid var(--border)",
-            }}
-          >
-            <div
-              style={{
-                width: 32,
-                height: 32,
-                borderRadius: "50%",
-                background: "linear-gradient(135deg, var(--cyan), var(--violet))",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 11,
-                fontWeight: 700,
-                color: "#fff",
-                fontFamily: "monospace",
-              }}
-            >
+          <div className="flex items-center gap-2.5 pb-4 mb-4 border-b border-[var(--border)]">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--cyan)] to-[var(--violet)] flex items-center justify-center text-[11px] font-bold text-white font-mono">
               AI
             </div>
             <div>
-              <p style={{ fontSize: 13, fontWeight: 600, color: "var(--text)" }}>
+              <p className="text-[13px] font-semibold text-[var(--text)]">
                 AI Anshum
               </p>
-              <p
-                style={{
-                  fontSize: 11,
-                  color: "var(--text-dim)",
-                  fontFamily: "'JetBrains Mono', monospace",
-                }}
-              >
+              <p className="text-[11px] text-[var(--text-dim)] font-mono">
                 trained on his actual experience
               </p>
             </div>
-            <div style={{ marginLeft: "auto" }}>
-              <span
-                className="pulse-dot"
-                style={{
-                  display: "block",
-                  width: 7,
-                  height: 7,
-                  borderRadius: "50%",
-                  background: "var(--green)",
-                }}
-              />
+            <div className="ml-auto">
+              <span className="pulse-dot block w-[7px] h-[7px] rounded-full bg-[var(--green)]" />
             </div>
           </div>
 
           {/* Chat bubbles */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 16 }}>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <div
-                style={{
-                  background: "var(--bg-subtle)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "12px 12px 2px 12px",
-                  padding: "9px 14px",
-                  fontSize: 13,
-                  color: "var(--text)",
-                  maxWidth: "80%",
-                }}
-              >
+          <div className="flex flex-col gap-3 mb-4">
+            <div className="flex justify-end">
+              <div className="bg-[var(--bg-subtle)] border border-[var(--border)] rounded-[12px_12px_2px_12px] px-3.5 py-2.5 text-[13px] text-[var(--text)] max-w-[80%]">
                 What&apos;s your biggest strength?
               </div>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "flex-start", gap: 8 }}>
-              <div
-                style={{
-                  width: 26,
-                  height: 26,
-                  borderRadius: "50%",
-                  background: "linear-gradient(135deg, var(--cyan), var(--violet))",
-                  flexShrink: 0,
-                  marginTop: 2,
-                }}
-              />
-              <div
-                style={{
-                  background: "var(--cyan-dim)",
-                  border: "1px solid var(--border-hi)",
-                  borderRadius: "12px 12px 12px 2px",
-                  padding: "9px 14px",
-                  fontSize: 13,
-                  color: "var(--text)",
-                  maxWidth: "80%",
-                  lineHeight: 1.5,
-                }}
-              >
+            <div className="flex justify-start gap-2">
+              <div className="w-[26px] h-[26px] rounded-full bg-gradient-to-br from-[var(--cyan)] to-[var(--violet)] shrink-0 mt-0.5" />
+              <div className="bg-[var(--cyan-dim)] border border-[var(--border-hi)] rounded-[12px_12px_12px_2px] px-3.5 py-2.5 text-[13px] text-[var(--text)] max-w-[80%] leading-relaxed">
                 I ship backend systems that don&apos;t fall apart — clean architecture,
                 solid APIs, and understanding the why behind every design decision.
               </div>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <div
-                style={{
-                  background: "var(--bg-subtle)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "12px 12px 2px 12px",
-                  padding: "9px 14px",
-                  fontSize: 13,
-                  color: "var(--text)",
-                  maxWidth: "80%",
-                }}
-              >
+            <div className="flex justify-end">
+              <div className="bg-[var(--bg-subtle)] border border-[var(--border)] rounded-[12px_12px_2px_12px] px-3.5 py-2.5 text-[13px] text-[var(--text)] max-w-[80%]">
                 Are you open to internships?
               </div>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "flex-start", gap: 8 }}>
-              <div
-                style={{
-                  width: 26,
-                  height: 26,
-                  borderRadius: "50%",
-                  background: "linear-gradient(135deg, var(--cyan), var(--violet))",
-                  flexShrink: 0,
-                  marginTop: 2,
-                }}
-              />
-              <div
-                style={{
-                  background: "var(--cyan-dim)",
-                  border: "1px solid var(--border-hi)",
-                  borderRadius: "12px 12px 12px 2px",
-                  padding: "9px 14px",
-                  fontSize: 13,
-                  color: "var(--text)",
-                  maxWidth: "80%",
-                  lineHeight: 1.5,
-                }}
-              >
+            <div className="flex justify-start gap-2">
+              <div className="w-[26px] h-[26px] rounded-full bg-gradient-to-br from-[var(--cyan)] to-[var(--violet)] shrink-0 mt-0.5" />
+              <div className="bg-[var(--cyan-dim)] border border-[var(--border-hi)] rounded-[12px_12px_12px_2px] px-3.5 py-2.5 text-[13px] text-[var(--text)] max-w-[80%] leading-relaxed">
                 Absolutely — reach out via the contact form and let&apos;s talk.
               </div>
             </div>
           </div>
 
           {/* Disabled input preview */}
-          <div
-            style={{
-              display: "flex",
-              gap: 8,
-              background: "var(--bg-subtle)",
-              border: "1px solid var(--border)",
-              borderRadius: 8,
-              padding: "8px 12px",
-              alignItems: "center",
-            }}
-          >
-            <span
-              style={{
-                flex: 1,
-                fontSize: 12,
-                color: "var(--text-dim)",
-                fontFamily: "'JetBrains Mono', monospace",
-              }}
-            >
+          <div className="flex gap-2 bg-[var(--bg-subtle)] border border-[var(--border)] rounded-lg px-3 py-2 items-center">
+            <span className="flex-1 text-[12px] text-[var(--text-dim)] font-mono">
               Ask me anything about Anshum...
             </span>
-            <div
-              style={{
-                background: "linear-gradient(135deg, var(--cyan), var(--violet))",
-                borderRadius: 6,
-                padding: "4px 10px",
-                fontSize: 11,
-                color: "#fff",
-                fontWeight: 600,
-              }}
-            >
+            <div className="bg-gradient-to-br from-[var(--cyan)] to-[var(--violet)] rounded-md px-2.5 py-1 text-[11px] text-white font-semibold">
               Ask
             </div>
           </div>
         </div>
       </div>
-
-      <style>{`
-        .hero-grid {
-          grid-template-columns: 1fr 1fr;
-        }
-        @media (max-width: 767px) {
-          .hero-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-      `}</style>
     </section>
   );
 }

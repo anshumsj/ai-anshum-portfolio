@@ -1,47 +1,27 @@
 "use client";
 
-export default function Skills({ initialSkills = [] }: { initialSkills?: any[] }) {
+import { SkillGroup } from "@/types";
+
+export default function Skills({ initialSkills = [] }: { initialSkills?: SkillGroup[] }) {
   return (
     <section
       id="skills"
+      className="py-28 px-8 border-t border-[var(--border)]"
       style={{
-        padding: "112px 32px",
-        borderTop: "1px solid var(--border)",
-        background:
-          "radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.05) 0%, transparent 60%)",
+        background: "radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.05) 0%, transparent 60%)",
       }}
     >
-      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <div className="content-wrap">
         <p className="section-label">Skills</p>
-        <h2
-          style={{
-            fontSize: "clamp(28px, 4vw, 42px)",
-            fontWeight: 700,
-            letterSpacing: "-0.02em",
-            lineHeight: 1.1,
-            marginBottom: 56,
-          }}
-        >
+        <h2 className="text-[clamp(28px,4vw,42px)] font-bold tracking-tight leading-tight mb-14">
           What I work with
         </h2>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 16,
-          }}
-          className="skills-grid"
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {initialSkills.map((group) => (
             <div
               key={group.category}
-              className="glass"
-              style={{
-                padding: "22px 24px",
-                cursor: "default",
-                transition: "border-color 0.2s, transform 0.2s",
-              }}
+              className="glass p-6 cursor-default transition-all duration-200 border border-[var(--border)]"
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLDivElement).style.borderColor = group.accent;
                 (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)";
@@ -51,34 +31,17 @@ export default function Skills({ initialSkills = [] }: { initialSkills?: any[] }
                 (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
               }}
             >
-              {/* Header */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 10,
-                  marginBottom: 16,
-                  paddingBottom: 14,
-                  borderBottom: "1px solid var(--border)",
-                }}
-              >
-                <span style={{ fontSize: 16 }}>{group.icon}</span>
+              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[var(--border)]">
+                <span className="text-base">{group.icon}</span>
                 <p
-                  style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: 11,
-                    fontWeight: 500,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: group.accent,
-                  }}
+                  className="font-mono text-[11px] font-medium tracking-widest uppercase"
+                  style={{ color: group.accent }}
                 >
                   {group.category}
                 </p>
               </div>
 
-              {/* Tags */}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
+              <div className="flex flex-wrap gap-2">
                 {group.items.map((skill: string) => (
                   <span key={skill} className="tag">
                     {skill}
@@ -89,18 +52,6 @@ export default function Skills({ initialSkills = [] }: { initialSkills?: any[] }
           ))}
         </div>
       </div>
-
-      <style>{`
-        .skills-grid {
-          grid-template-columns: repeat(3, 1fr);
-        }
-        @media (max-width: 900px) {
-          .skills-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 540px) {
-          .skills-grid { grid-template-columns: 1fr; }
-        }
-      `}</style>
     </section>
   );
 }

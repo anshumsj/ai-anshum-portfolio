@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { geminiModel } from "@/lib/groq";
-
+import { isAuthed } from "@/lib/auth";
 export async function POST(req: NextRequest) {
   try {
-    const adminPassword = req.headers.get("x-admin-password");
-    if (adminPassword !== process.env.ADMIN_PASSWORD) {
+    if (!(await isAuthed())) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
